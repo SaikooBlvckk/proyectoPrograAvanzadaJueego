@@ -35,6 +35,8 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<DisparoDoble> pDispDoble = new ArrayList<>();
 	private  ArrayList<VidaExtra> pVidExt = new ArrayList<>();
 
+	private Texture mTextureBg = new Texture("Space.png");
+
 
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides, int cantAsteroides) {
@@ -116,23 +118,26 @@ public class PantallaJuego implements Screen {
 	}
 	@Override
 	public void render(float delta) {
-		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-          batch.begin();
-		  dibujaEncabezado();
-	      if (!nave.estaHerido()) {
-		      // colisiones entre balas y asteroides y su destruccion  
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		game.getBatch().begin();
+		game.getBatch().draw(mTextureBg, 0 , 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		game.getBatch().end();
+      	batch.begin();
+	  	dibujaEncabezado();
+      	if (!nave.estaHerido()) {
+		  // colisiones entre balas y asteroides y su destruccion  
 	    	  for (int i = 0; i < balas.size(); i++) {
-		            Bullet b = balas.get(i);
-		            b.update();
-		            for (int j = 0; j < balls1.size(); j++) {    
-		              if (b.checkCollision(balls1.get(j))) {          
-		            	 explosionSound.play();
-		            	 balls1.remove(j);
-		            	 balls2.remove(j);
-		            	 j--;
-		            	 score +=10;
-		              }   	  
-		  	        }
+		           	Bullet b = balas.get(i);
+		       	    b.update();
+		           	for (int j = 0; j < balls1.size(); j++) {    
+		             	if (b.checkCollision(balls1.get(j))) {          
+		   	        		explosionSound.play();
+	        	    		balls1.remove(j);
+	            			balls2.remove(j);
+	            			j--;
+	            			score +=10;
+	           		    }   	  
+	  	       		}
 		                
 		         //   b.draw(batch);
 		            if (b.isDestroyed()) {

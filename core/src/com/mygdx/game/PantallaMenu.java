@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
@@ -11,6 +14,8 @@ public class PantallaMenu implements Screen {
 
 	private SpaceNavigation game;
 	private OrthographicCamera camera;
+
+	private Texture mTextureBg = new Texture("Space.png");
 
 	public PantallaMenu(SpaceNavigation game) {
 		this.game = game;
@@ -21,8 +26,11 @@ public class PantallaMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
-
+		//ScreenUtils.clear(0, 0, 0.8f, 1);
+		game.getBatch().begin();
+		game.getBatch().draw(mTextureBg, 0 , 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		game.getBatch().end();
+		
 		camera.update();
 		game.getBatch().setProjectionMatrix(camera.combined);
 

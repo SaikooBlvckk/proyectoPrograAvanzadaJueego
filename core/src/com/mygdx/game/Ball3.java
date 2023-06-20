@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Ball3 extends Asteroides{
+    private boolean resized = false; // nuevo atributo para controlar si ya se redimensionó
+
     public Ball3(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
     	setSpr(new Sprite(tx));
     	setX(x); 
@@ -29,7 +31,17 @@ public class Ball3 extends Asteroides{
     public int calculateScore() {
         return 3 * (getXSpeed() + getySpeed());
     }
+    
     public void resize() {
-        this.getSpr().setSize(this.getSpr().getWidth() * 2, this.getSpr().getHeight() * 2);
-}
+        // Si ya se redimensionó, no hacer nada
+        if (resized) {
+            return;
+        }
+        
+        // Aumentar el tamaño en un 1.2
+        this.getSpr().setSize(this.getSpr().getWidth() * 1.2f, this.getSpr().getHeight() * 1.2f);
+        
+        // Marcar como redimensionado
+        resized = true;
+    }
 }
