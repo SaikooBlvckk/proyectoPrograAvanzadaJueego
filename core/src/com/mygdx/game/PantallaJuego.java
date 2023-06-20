@@ -87,7 +87,7 @@ public class PantallaJuego implements Screen {
 
 		//crear potenciador DisparoDoble
 		Random a = new Random();
-	    for (int i = 0; i < 0; i++) {
+	    for (int i = 0; i < 1; i++) {
 	        DisparoDoble disp = new DisparoDoble(a.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+a.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+a.nextInt(10), velXAsteroides+a.nextInt(4), 
@@ -101,7 +101,7 @@ public class PantallaJuego implements Screen {
 	        VidaExtra vidExt = new VidaExtra(b.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+b.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+b.nextInt(10), velXAsteroides+b.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("powerup.png")));	   
+	  	            new Texture(Gdx.files.internal("orb.png")));	   
 	  	    pVidExt.add(vidExt);
 	  	}
 	}

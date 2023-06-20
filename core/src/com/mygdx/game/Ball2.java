@@ -17,11 +17,19 @@ public class Ball2 extends Asteroides{
          
         setY(y);
         //validar que borde de esfera no quede fuera
-    	if (y-size < 0) setY(y+size);;
+    	if (y-size < 0) setY(y+size);
     	if (y+size > Gdx.graphics.getHeight()) setY(y-size);
     	
-        getSpr().setPosition(x, y);
+        getSpr().setPosition(getX(), getY());
         setXSpeed(xSpeed);
         setySpeed(ySpeed);
+    }
+
+    @Override
+    public int calculateScore() {
+        return getXSpeed() + getySpeed();
+    }
+    public void resize() {
+        this.getSpr().setSize(this.getSpr().getWidth() / 2, this.getSpr().getHeight() / 2);
     }
 }
