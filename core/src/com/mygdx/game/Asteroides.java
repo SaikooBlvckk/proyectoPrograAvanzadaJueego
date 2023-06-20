@@ -12,20 +12,15 @@ public abstract class Asteroides{
     private int xSpeed;
     private int ySpeed;
     private Sprite spr;
-    
-    public abstract int calculateScore();
-    public abstract void resize();
 
     public void update() {
         x += getXSpeed();
         y += getySpeed();
 
-        if (x+getXSpeed() < 0 || x+getXSpeed()+spr.getWidth() > Gdx.graphics.getWidth()){
-            setXSpeed(getXSpeed() * -1);
-        }
-        if (y+getySpeed() < 0 || y+getySpeed()+spr.getHeight() > Gdx.graphics.getHeight()){
-            setySpeed(getySpeed() * -1);
-        }
+        if (x+getXSpeed() < 0 || x+getXSpeed()+spr.getWidth() > Gdx.graphics.getWidth())
+        	setXSpeed(getXSpeed() * -1);
+        if (y+getySpeed() < 0 || y+getySpeed()+spr.getHeight() > Gdx.graphics.getHeight())
+        	setySpeed(getySpeed() * -1);
         spr.setPosition(x, y);
     }
 
@@ -70,6 +65,10 @@ public abstract class Asteroides{
             b2.resize();
         }
     }
+
+    // Método abstracto
+    public abstract int calculateScore();
+    public abstract void resize();
 
     public int getX(){
         return this.x;

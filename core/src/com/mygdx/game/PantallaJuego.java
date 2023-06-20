@@ -63,6 +63,7 @@ public class PantallaJuego implements Screen {
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
+
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
@@ -76,7 +77,7 @@ public class PantallaJuego implements Screen {
 
 		//crear asteroides
         Random j = new Random();
-	    for (int i = 0; i < 1; i++) {
+	    for (int i = 0; i < 3; i++) {
 	        Ball3 bb = new Ball3(j.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+j.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+j.nextInt(10), velXAsteroides+j.nextInt(4), velYAsteroides+j.nextInt(4), 
