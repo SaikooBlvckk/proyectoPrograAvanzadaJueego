@@ -3,19 +3,20 @@ package com.mygdx.game;
 public class ShipDirector {
     private ShipBuilder shipBuilder;
 
-    public ShipDirector(ShipBuilder shipBuilder) {
-        this.shipBuilder = shipBuilder;
+    public void setConstructorNave(ShipBuilder cn) {
+        shipBuilder = cn;
     }
 
-    public void constructShip() {
-        shipBuilder.createNewShipProduct();
-        shipBuilder.buildSprite();
-        shipBuilder.buildBody();
-        shipBuilder.buildShape();
-        // Llama aquí a cualquier otro método "build" que necesites.
+    public Nave4 getNave() {
+        return shipBuilder.getNave();
     }
 
-    public Nave4 getShip() {
-        return shipBuilder.getShip();
+    public void construirNave() {
+        shipBuilder.crearNuevaNave();
+        shipBuilder.construirCasco();
+        shipBuilder.construirPropulsores();
+        shipBuilder.construirArmas();
+        shipBuilder.construirEscudos();
     }
+
 }

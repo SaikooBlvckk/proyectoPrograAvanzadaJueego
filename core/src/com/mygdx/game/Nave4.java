@@ -23,8 +23,13 @@ public class Nave4 {
     private boolean consumioDispDoble;
     private DisparoDoble disparoDoble;
 
+    private String casco;
+    private String propulsores;
+    private String armas;
+    private String escudos;
+
     public Nave4(){
-        
+
     }
 
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
@@ -214,4 +219,38 @@ public class Nave4 {
             this.consumioDispDoble = false;
         }
     }
+
+     public String getCasco() {
+        return casco;
+    }
+
+    public String getPropulsores() {
+        return propulsores;
+    }
+
+    public String getArmas() {
+        return armas;
+    }
+
+    public String getEscudos() {
+        return escudos;
+    }
+
+    public void setCasco(String casco) {
+        this.casco = casco;
+    }
+
+    public void setPropulsores(String propulsores) {
+        this.propulsores = propulsores;
+    }
+
+    public void setArmas(String armas) {
+        this.armas = armas;
+    }
+
+    public void setEscudos(String escudos) {
+        this.escudos = escudos;
+    }
+
+
 }
