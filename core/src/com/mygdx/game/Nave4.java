@@ -23,6 +23,10 @@ public class Nave4 {
     private boolean consumioDispDoble;
     private DisparoDoble disparoDoble;
 
+    public Nave4(){
+        
+    }
+
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         sonidoHerido = soundChoque;
         this.soundBala = soundBala;
