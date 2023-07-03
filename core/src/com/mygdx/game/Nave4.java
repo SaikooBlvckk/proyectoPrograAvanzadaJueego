@@ -109,7 +109,7 @@ public class Nave4 {
         return false;
     }
 
-    public boolean checkCollision(Ball2 b) {
+    public boolean checkCollision(Ovni b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
             // rebote
             if (xVel == 0) xVel += b.getXSpeed() / 2;
@@ -117,10 +117,10 @@ public class Nave4 {
             xVel = -xVel;
             b.setXSpeed(-b.getXSpeed());
 
-            if (yVel == 0) yVel += b.getySpeed() / 2;
-            if (b.getySpeed() == 0) b.setySpeed(b.getySpeed() + (int) yVel / 2);
+            if (yVel == 0) yVel += b.getYSpeed() / 2;
+            if (b.getYSpeed() == 0) b.setySpeed(b.getYSpeed() + (int) yVel / 2);
             yVel = -yVel;
-            b.setySpeed(-b.getySpeed());
+            b.setySpeed(-b.getYSpeed());
 
             // despegar sprites
             /* int cont = 0;
@@ -140,7 +140,7 @@ public class Nave4 {
         return false;
     }
 
-    public boolean checkCollision(Ball3 b) {
+    public boolean checkCollision(NaveEnemiga b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
             // rebote
             if (xVel == 0) xVel += b.getXSpeed() / 2;
@@ -148,10 +148,10 @@ public class Nave4 {
             xVel = -xVel;
             b.setXSpeed(-b.getXSpeed());
 
-            if (yVel == 0) yVel += b.getySpeed() / 2;
-            if (b.getySpeed() == 0) b.setySpeed(b.getySpeed() + (int) yVel / 2);
+            if (yVel == 0) yVel += b.getYSpeed() / 2;
+            if (b.getYSpeed() == 0) b.setySpeed(b.getYSpeed() + (int) yVel / 2);
             yVel = -yVel;
-            b.setySpeed(-b.getySpeed());
+            b.setySpeed(-b.getYSpeed());
 
             // despegar sprites
             /* int cont = 0;
@@ -177,6 +177,10 @@ public class Nave4 {
 
     public boolean estaHerido() {
         return herido;
+    }
+
+    public void setSprite(Sprite spr){
+        this.spr = spr;
     }
 
     public int getVidas() {

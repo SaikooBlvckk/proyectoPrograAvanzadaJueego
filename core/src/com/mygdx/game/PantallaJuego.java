@@ -19,7 +19,7 @@ public class PantallaJuego implements Screen {
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
 	private Sound explosionSound;
-	private Music gameMusic;
+	//private Music gameMusic;
 	private int score;
 	private int ronda;
 	private int velXAsteroides; 
@@ -27,10 +27,10 @@ public class PantallaJuego implements Screen {
 	private int cantAsteroides;
 	
 	private Nave4 nave;
-	private  ArrayList<Ball2> balls1 = new ArrayList<>();
-	private  ArrayList<Ball2> balls2 = new ArrayList<>();
-	private  ArrayList<Ball3> balls3 = new ArrayList<>();
-	private  ArrayList<Ball3> balls4 = new ArrayList<>();
+	private  ArrayList<Ovni> Ovnis1 = new ArrayList<>();
+	private  ArrayList<Ovni> Ovnis2 = new ArrayList<>();
+	private  ArrayList<NaveEnemiga> naveEnemigas1 = new ArrayList<>();
+	private  ArrayList<NaveEnemiga> naveEnemigas2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
 	private  ArrayList<DisparoDoble> pDispDoble = new ArrayList<>();
 	private  ArrayList<VidaExtra> pVidExt = new ArrayList<>();
@@ -53,11 +53,11 @@ public class PantallaJuego implements Screen {
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		explosionSound.setVolume(1,0.5f);
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
+		//gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
 		
-		gameMusic.setLooping(true);
-		gameMusic.setVolume(0.5f);
-		gameMusic.play();
+		//gameMusic.setLooping(true);
+		//gameMusic.setVolume(0.5f);
+		//gameMusic.play();
 		
 	    // cargar imagen de la nave, 64x64   
 	    nave = new Nave4(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
@@ -69,23 +69,23 @@ public class PantallaJuego implements Screen {
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
-	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
-	  	    balls1.add(bb);
-	  	    balls2.add(bb);
+	        Ovni bb = new Ovni(r.nextInt((int)Gdx.graphics.getWidth()),
+						50+r.nextInt((int)Gdx.graphics.getHeight()-50),
+						velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4),
+						new Texture(Gdx.files.internal("ShipOrange.png")));	   
+	  	    Ovnis1.add(bb);
+	  	    Ovnis2.add(bb);
 	  	}
 
-		//crear asteroides
+		//crear naves enemigas
         Random j = new Random();
 	    for (int i = 0; i < 3; i++) {
-	        Ball3 bb = new Ball3(j.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+j.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+j.nextInt(10), velXAsteroides+j.nextInt(4), velYAsteroides+j.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("aGreyMediumBad.png")));	   
-	  	    balls3.add(bb);
-	  	    balls4.add(bb);
+	        NaveEnemiga bb = new NaveEnemiga(j.nextInt((int)Gdx.graphics.getWidth()),
+						50+j.nextInt((int)Gdx.graphics.getHeight()-50),
+						velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4),
+						new Texture(Gdx.files.internal("ShipBlue.png")));
+	  	    naveEnemigas1.add(bb);
+	  	    naveEnemigas2.add(bb);
 	  	}
 
 		//crear potenciador DisparoDoble
@@ -129,11 +129,11 @@ public class PantallaJuego implements Screen {
 	    	  for (int i = 0; i < balas.size(); i++) {
 		           	Bullet b = balas.get(i);
 		       	    b.update();
-		           	for (int j = 0; j < balls1.size(); j++) {    
-		             	if (b.checkCollision(balls1.get(j))) {          
+		           	for (int j = 0; j < Ovnis1.size(); j++) {    
+		             	if (b.checkCollision(Ovnis1.get(j))) {          
 		   	        		explosionSound.play();
-	        	    		balls1.remove(j);
-	            			balls2.remove(j);
+	        	    		Ovnis1.remove(j);
+	            			Ovnis2.remove(j);
 	            			j--;
 	            			score +=10;
 	           		    }   	  
@@ -149,11 +149,11 @@ public class PantallaJuego implements Screen {
 			  for (int i = 0; i < balas.size(); i++) {
 				Bullet b = balas.get(i);
 				b.update();
-				for (int j = 0; j < balls3.size(); j++) {    
-				  if (b.checkCollision(balls3.get(j))) {          
+				for (int j = 0; j < naveEnemigas1.size(); j++) {    
+				  if (b.checkCollision(naveEnemigas1.get(j))) {          
 					 explosionSound.play();
-					 balls3.remove(j);
-					 balls4.remove(j);
+					 naveEnemigas1.remove(j);
+					 naveEnemigas2.remove(j);
 					 j--;
 					 score +=10;
 				  }   	  
@@ -166,14 +166,14 @@ public class PantallaJuego implements Screen {
 				}
 		  }
 		      //actualizar movimiento de asteroides dentro del area
-		      for (Ball2 ball : balls1) {
+		      for (Ovni ball : Ovnis1) {
 		          ball.update();
 		      }
 		      //colisiones entre asteroides y sus rebotes  
-		      for (int i=0;i<balls1.size();i++) {
-		    	Ball2 ball1 = balls1.get(i);   
-		        for (int j=0;j<balls2.size();j++) {
-		          Ball2 ball2 = balls2.get(j); 
+		      for (int i=0;i<Ovnis1.size();i++) {
+		    	Ovni ball1 = Ovnis1.get(i);   
+		        for (int j=0;j<Ovnis2.size();j++) {
+		          Ovni ball2 = Ovnis2.get(j); 
 		          if (i<j) {
 		        	  ball1.checkCollision(ball2);
 		     
@@ -182,16 +182,16 @@ public class PantallaJuego implements Screen {
 		      } 
 
 			  //actualizar movimiento de asteroides dentro del area
-		      for (Ball3 ball : balls3) {
+		      for (NaveEnemiga ball : naveEnemigas1) {
 				ball.update();
 			}
 			//colisiones entre asteroides y sus rebotes  
-			for (int i=0;i<balls3.size();i++) {
-			  Ball3 ball3 = balls3.get(i);   
-			  for (int j=0;j<balls4.size();j++) {
-				Ball3 ball4 = balls4.get(j); 
+			for (int i=0;i<naveEnemigas1.size();i++) {
+			  NaveEnemiga NaveEnemiga1 = naveEnemigas1.get(i);   
+			  for (int j=0;j<naveEnemigas2.size();j++) {
+				NaveEnemiga NaveEnemiga2 = naveEnemigas2.get(j); 
 				if (i<j) {
-					ball3.checkCollision(ball4);
+					NaveEnemiga1.checkCollision(NaveEnemiga2);
 		   
 				}
 			  }
@@ -203,27 +203,27 @@ public class PantallaJuego implements Screen {
 	      }
 	      nave.draw(batch, this);
 	      //dibujar asteroides y manejar colision con nave
-	      for (int i = 0; i < balls1.size(); i++) {
-	    	    Ball2 b=balls1.get(i);
+	      for (int i = 0; i < Ovnis1.size(); i++) {
+	    	    Ovni b=Ovnis1.get(i);
 	    	    b.draw(batch);
 		          //perdió vida o game over
 	              if (nave.checkCollision(b)) {
 		            //asteroide se destruye con el choque             
-	            	 balls1.remove(i);
-	            	 balls2.remove(i);
+	            	 Ovnis1.remove(i);
+	            	 Ovnis2.remove(i);
 	            	 i--;
               }   	  
   	        }
 
 			//dibujar asteroides y manejar colision con nave
-			for (int i = 0; i < balls3.size(); i++) {
-	    	    Ball3 b=balls3.get(i);
+			for (int i = 0; i < naveEnemigas1.size(); i++) {
+	    	    NaveEnemiga b=naveEnemigas1.get(i);
 	    	    b.draw(batch);
 		          //perdió vida o game over
 	              if (nave.checkCollision(b)) {
 		            //asteroide se destruye con el choque             
-	            	 balls3.remove(i);
-	            	 balls4.remove(i);
+	            	 naveEnemigas1.remove(i);
+	            	 naveEnemigas2.remove(i);
 	            	 i--;
               }   	  
   	        }
@@ -265,7 +265,7 @@ public class PantallaJuego implements Screen {
   		  }
 	      batch.end();
 	      //nivel completado
-	      if (balls1.size()==0) {
+	      if (Ovnis1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
 					velXAsteroides+1, velYAsteroides+1, cantAsteroides+3);
 			ss.resize(1200, 800);
@@ -282,7 +282,7 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		gameMusic.play();
+		//gameMusic.play();
 	}
 
 	@Override
@@ -313,7 +313,7 @@ public class PantallaJuego implements Screen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		this.explosionSound.dispose();
-		this.gameMusic.dispose();
+		//this.gameMusic.dispose();
 	}
    
 }
